@@ -30,22 +30,11 @@ public class ShotController: MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision) 
     {
-        // IDamageable damageable = collision.collider.gameObject.GetComponent<IDamageable>();
-        // if(damageable != null) 
-        // {
-        //     bool killed = damageable.TakeDamage(HitPower);
-        //     if(WorldController && killed) 
-        //     {
-        //         WorldController.AddPoints(1);
-
-        //         if(damageable.IsEnemy()) {
-        //             WorldController.EnemyKilled(collision.transform.position, false);
-        //         }
-        //     }
-
-        //     AudioSource.PlayClipAtPoint(HitSound, transform.position);
-        // }
-
+        IDamageable damageable = collision.collider.gameObject.GetComponent<IDamageable>();
+        if(damageable != null) 
+        {
+            bool killed = damageable.takeDamage(this.hitPower);
+        }
 
         this.destroyed(true);
     }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class PlayerController: MonoBehaviour
 {
     public CannonController cannon;
-    public float runSpeed = 20.0f;
+    public float speed = 10.0f;
     public float shotCooldownTime = 0.2f;
 
     private Rigidbody2D rb;
@@ -35,7 +35,7 @@ public class PlayerController: MonoBehaviour
             this.vertical *= moveLimiter;
         } 
 
-        this.rb.velocity = new Vector2(this.horizontal * this.runSpeed, this.vertical * this.runSpeed);
+        this.rb.velocity = new Vector2(this.horizontal * this.speed, this.vertical * this.speed);
 
         this.shootCooldown -= Time.deltaTime;
         if(this.shootCooldown <= 0 && this.shoot)
