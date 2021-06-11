@@ -40,8 +40,7 @@ public class PlayerController: MonoBehaviour
         this.shootCooldown -= Time.deltaTime;
         if(this.shootCooldown <= 0 && this.shoot)
         {
-            Vector2 direction = Vector2Utils.Vector2FromAngle(this.rb.rotation);
-            this.cannon.fire(direction, this.rb.velocity);
+            this.cannon.fire(Vector2.up, this.rb.velocity);
             //Rigidbody.AddForce(BaseRecoil * Mathf.Exp(this.shootPower) * direction);
 
             this.shake();

@@ -12,20 +12,33 @@ public class EnemyController: MonoBehaviour, IDamageable
     public GameObject shot;
     public GameObject lookAhead;
 
+    private ShipController ship;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private float shotCooldown = 1.5f;
+    private bool isActive = true;
 
     void Start() 
     {
         this.rb = GetComponent<Rigidbody2D>();
         this.sr = GetComponent<SpriteRenderer>();
+        this.ship = Object.FindObjectOfType<ShipController>();
     }
 
     void FixedUpdate()
     {
-        this.transform.position -= new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(-2.5f, 2.5f), 0) * Time.deltaTime;
-        this.transform.rotation = Quaternion.identity;
+        if(this.isActive)
+        {
+            if(Mathf.Abs(this.ship.transform.position.y - this.transform.position.y) > 1f) 
+            {
+                this.transform.position -= new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(-2.5f, 2.5f), 0) * Time.deltaTime;
+            }
+            else
+            {
+                this.transform.position = this.ship.transform.position;
+                this.isActive = false;
+            }
+        }
     }
 
     public bool takeDamage(float damageTaken)
