@@ -13,9 +13,10 @@ public class CannonController : MonoBehaviour
         this.worldController = Object.FindObjectOfType<WorldController>();
     }
 
-    public void fire(bool up, float baseSpeed)
+    public void fire(float baseSpeed, float multiplier)
     {
         ShotController shot = Instantiate(this.shot, transform.position, transform.rotation, this.worldController.transform.parent).GetComponent<ShotController>();
-        shot.fire(up, baseSpeed, this.damage);
+        shot.transform.localScale *= multiplier;
+        shot.fire(baseSpeed, this.damage * multiplier);
     }
 }

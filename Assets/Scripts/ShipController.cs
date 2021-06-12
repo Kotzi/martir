@@ -4,6 +4,7 @@ using DG.Tweening;
 public class ShipController: MonoBehaviour
 {
     public SpriteRenderer lightsSpriteRenderer;
+    public Rigidbody2D lastChainJoint;
 
     void Start()
     {

@@ -16,18 +16,16 @@ public class ShotController: MonoBehaviour
         this.sp = GetComponent<SpriteRenderer>();
     }
 
-    public void fire(bool up, float baseVelocity, float hitPower) 
+    public void fire(float baseVelocity, float hitPower) 
     {
-        var angle = up ? 90f : -90f;
-        this.transform.eulerAngles = new Vector3(0f, 0f, angle);
-
-        var direction = up ? Vector2.up : Vector2.down;
+        this.transform.eulerAngles = new Vector3(0f, 0f, 90f);
 
         this.hitPower = hitPower;
 
         this.rb.angularVelocity = 0f;
-        this.rb.velocity = direction * (this.speed + baseVelocity);
+        this.rb.velocity = Vector2.up * (this.speed + baseVelocity);
     }
+    
     void OnCollisionEnter2D(Collision2D collision) 
     {
         IDamageable damageable = collision.collider.gameObject.GetComponent<IDamageable>();
