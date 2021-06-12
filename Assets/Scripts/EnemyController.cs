@@ -8,6 +8,7 @@ public class EnemyController: MonoBehaviour, IDamageable
     public float health = 10f;
     public float shootPower = 0.5f;
     public float maxShootCooldown = 1.5f;
+    public string animationName = "FlyEnemy";
 
     public GameObject shot;
     public GameObject lookAhead;
@@ -22,6 +23,7 @@ public class EnemyController: MonoBehaviour, IDamageable
     {
         this.rb = GetComponent<Rigidbody2D>();
         this.sr = GetComponent<SpriteRenderer>();
+        this.GetComponent<Animator>().Play(this.animationName);
         this.ship = Object.FindObjectOfType<ShipController>();
     }
 

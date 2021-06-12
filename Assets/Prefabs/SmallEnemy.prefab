@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &4912208589930766079
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1248870039025834177, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: animationName
+      value: FlySmallEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960400961171101575, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_Size.x
+      value: 1.1228467
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960400961171101575, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_Size.y
+      value: 3.0202732
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960400961171101575, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.0043304563
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960400961171101575, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.012203693
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400925, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371301808818400927, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_Name
+      value: SmallEnemy
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: cdc255220e5014986be4df47c90d8847, type: 3}

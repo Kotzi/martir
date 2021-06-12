@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemySpawnZoneController: MonoBehaviour
 {  
     public GameObject enemyPrefab;
+    public GameObject smallEnemyPrefab;
     private float enemySpawnCooldown = 2f;
     private float maxEnemySpawnCooldown = 2f;
     
@@ -14,7 +15,8 @@ public class EnemySpawnZoneController: MonoBehaviour
 
         if(this.enemySpawnCooldown <= 0f)
         {
-            Instantiate(this.enemyPrefab, this.transform.position, this.transform.rotation, this.transform.parent);
+            var prefab = Random.value >= 0.5f ? this.smallEnemyPrefab : this.enemyPrefab;
+            Instantiate(prefab, this.transform.position, this.transform.rotation, this.transform.parent);
             this.enemySpawnCooldown = this.maxEnemySpawnCooldown;
         }
     }
