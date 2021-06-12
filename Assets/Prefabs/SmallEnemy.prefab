@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1248870039025834177, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1248870039025834177, guid: cdc255220e5014986be4df47c90d8847, type: 3}
       propertyPath: animationName
       value: FlySmallEnemy
       objectReference: {fileID: 0}

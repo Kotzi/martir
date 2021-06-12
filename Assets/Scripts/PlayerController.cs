@@ -1,12 +1,18 @@
 using UnityEngine;
+using DG.Tweening;
 
 public class PlayerController: MonoBehaviour
 {
+    const int MAX_COUNTDOWN = 15;
+    const float DISCONNECTION_TIMER = 2f;
+    const float DISCONNECTION_SPEED = 30f;
+    const int MAX_LIVES = 5;
     const int MAX_SHOOTS = 4;
     const float MAX_SPEED = 5f;
     const float MIN_SHOOT_COOLDOWN = 0.01f;
     const float ACCELERATION = 7.5f;
 
+    public WorldController worldController;
     public CannonController cannon;
     public ShipController ship;
     public float shotCooldownTime = 0.05f;
@@ -19,8 +25,6 @@ public class PlayerController: MonoBehaviour
     private float vertical = 0f;
     private float moveLimiter = 0.7f;
     private float shootCooldown = 0f;
-    private float shootPower = 4f;
-    private float baseRecoil = -5f;
     private bool shoot = false;
     private bool connect = false;
     private Vector2 speed = Vector2.zero;
@@ -29,6 +33,10 @@ public class PlayerController: MonoBehaviour
     private float cameraHeight;
     private float halfSpriteHeight;
     private int maxShoots = 1;
+    private int countdown = MAX_COUNTDOWN;
+    private float countdownTimer = 1f;
+    private int lives = MAX_LIVES;
+    private float isDesconnectingTimer = 2f;
 
     void Start()
     {
@@ -53,6 +61,26 @@ public class PlayerController: MonoBehaviour
         this.vertical = Input.GetAxisRaw("Vertical");
         this.shoot = Input.GetButton("Shoot");
         this.connect = Input.GetButton("Connect");
+    
+        if (this.isDesconnectingTimer > 0)
+        {
+            this.isDesconnectingTimer -= Time.deltaTime;
+        }
+        else if (!this.isConnected())
+        {
+            this.countdownTimer -= Time.deltaTime;
+            if (this.countdownTimer <= 0)
+            {
+                this.countdown -= 1;
+                this.countdownTimer = 1f;
+                this.worldController.updateCountdown(this.countdown);
+
+                if (this.countdown <= 0)
+                {
+                    this.playerDied(true);
+                }
+            }
+        }
     }
 
     void FixedUpdate()
@@ -80,7 +108,7 @@ public class PlayerController: MonoBehaviour
         {
             this.cannon.fire(this.maxShoots, this.speed.y, this.isConnected() ? 2f : 1f);
             this.animator.SetBool("IsAttacking", true);
-            //this.rb.AddForce(this.baseRecoil * Mathf.Exp(this.shootPower) * Vector2.down);
+            this.rb.velocity += Mathf.Exp(this.maxShoots) * Vector2.down;
 
             this.shake();
 
@@ -97,12 +125,14 @@ public class PlayerController: MonoBehaviour
             {
                 if(Vector2.Distance(this.chainConnector.transform.position, this.ship.lastChainJoint.transform.position) < 1f) 
                 {
-                    this.chainConnector.enabled = true;
+                    this.setIsConnected(true);
                 }
             }
             else
             {
-                this.chainConnector.enabled = false;
+                this.setIsConnected(false);
+                this.isDesconnectingTimer = DISCONNECTION_TIMER;
+                this.rb.velocity += Vector2.up * DISCONNECTION_SPEED;
             }
         }
     }
@@ -132,12 +162,24 @@ public class PlayerController: MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision) 
     {
-        if(!this.chainConnector.enabled)
+        EnemyController enemy = collision.collider.GetComponent<EnemyController>();
+        if (enemy)
         {
-            ShipController ship = collision.collider.gameObject.GetComponentInParent<ShipController>();
+            this.lives -= 1;
+            this.worldController.updateLives(this.lives);
+            enemy.destroyByPlayerImpact();
+
+            if (this.lives <= 0)
+            {
+                this.playerDied(false);
+            }
+        }
+        else if(!this.chainConnector.enabled && this.isDesconnectingTimer <= 0)
+        {
+            ShipController ship = collision.collider.GetComponentInParent<ShipController>();
             if(ship != null) 
             {
-                this.chainConnector.enabled = true;
+                this.setIsConnected(true);
             }
         }
     }
@@ -157,8 +199,23 @@ public class PlayerController: MonoBehaviour
 
     }
 
+    void setIsConnected(bool isConnected)
+    {
+        this.chainConnector.enabled = isConnected;
+        this.countdown = isConnected ? -1 : MAX_COUNTDOWN;
+        this.worldController.updateCountdown(this.countdown);
+    }
+    
     bool isConnected()
     {
         return this.chainConnector.enabled;
+    }
+
+    void playerDied(bool runOutOfTime)
+    {
+        this.worldController.playerDied(runOutOfTime);
+        this.transform.DOScale(this.transform.localScale * 0.5f, 0.15f).OnComplete(() => {
+            Destroy(this.gameObject);
+        });
     }
 }

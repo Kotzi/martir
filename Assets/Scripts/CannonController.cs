@@ -17,7 +17,7 @@ public class CannonController : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            ShotController shot = Instantiate(this.shot, new Vector3(this.transform.position.x + 0.75f * this.index(i, count), this.transform.position.y, this.transform.position.z), transform.rotation, this.worldController.transform.parent).GetComponent<ShotController>();
+            ShotController shot = Instantiate(this.shot, new Vector3(this.transform.position.x + 0.7f * this.index(i, count), this.transform.position.y, this.transform.position.z), transform.rotation, this.worldController.transform.parent).GetComponent<ShotController>();
             shot.transform.localScale *= multiplier;
             shot.fire(Vector2.up, baseSpeed, this.damage * multiplier);
         }

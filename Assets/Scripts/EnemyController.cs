@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-// using DG.Tweening;
+using DG.Tweening;
 
 public class EnemyController: MonoBehaviour, IDamageable
 {
@@ -9,9 +7,6 @@ public class EnemyController: MonoBehaviour, IDamageable
     public float shootPower = 0.5f;
     public float maxShootCooldown = 1.5f;
     public string animationName = "FlyEnemy";
-
-    public GameObject shot;
-    public GameObject lookAhead;
 
     private ShipController ship;
     private Rigidbody2D rb;
@@ -45,6 +40,10 @@ public class EnemyController: MonoBehaviour, IDamageable
 
     public bool takeDamage(float damageTaken)
     {
+        DOTween.Sequence()
+                .Append(this.sr.DOFade(0.65f, 0.15f))
+                .Append(this.sr.DOFade(1f, 0.05f));
+        
         this.health -= damageTaken;
 
         if(this.health <= 0)
@@ -61,6 +60,11 @@ public class EnemyController: MonoBehaviour, IDamageable
     public bool isEnemy()
     {
         return true;
+    }
+
+    public void destroyByPlayerImpact()
+    {
+        this.destroyed();
     }
 
     private void destroyed()

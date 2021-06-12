@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 5a555a4e6a7914fd7acda6fba48b9ef1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -138,6 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8207b82efb6d4c72bb8f6e07c15ff4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  worldController: {fileID: 0}
   cannon: {fileID: 3792063970919529685}
   ship: {fileID: 0}
   shotCooldownTime: 0.2
