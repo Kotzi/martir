@@ -1311,6 +1311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shootPowerUpPrefab: {fileID: 415511412994864936, guid: 72f4a43564d73427c976e7641f2eee1c, type: 3}
   cooldownPowerUpPrefab: {fileID: 6424268113538039214, guid: 68110d99dd190458cb2c1e46ced3417f, type: 3}
+  sceneManager: {fileID: 1734458083}
   enemySpawnZones:
   - {fileID: 1848095902}
   - {fileID: 930970204}

@@ -7,6 +7,7 @@ public class WorldController : MonoBehaviour
     const float POWER_UP_MAX_TIME = 5f;
     public GameObject shootPowerUpPrefab;
     public GameObject cooldownPowerUpPrefab;
+    public SceneManagerController sceneManager;
     public GameObject[] enemySpawnZones;
     public Transform cameraTransform;
     public GameUICanvasController gameUICanvasController;
@@ -19,6 +20,7 @@ public class WorldController : MonoBehaviour
 
     void Start()
     {
+        this.sceneManager.currentSceneIndex = 1;
         this.resetActive(false);
     }
 
