@@ -4,15 +4,12 @@ using DG.Tweening;
 public class EnemyController: MonoBehaviour, IDamageable
 {
     public float health = 10f;
-    public float shootPower = 0.5f;
-    public float maxShootCooldown = 1.5f;
     public string animationName = "FlyEnemy";
+    public bool isActive = true;
 
     private ShipController ship;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    private float shotCooldown = 1.5f;
-    private bool isActive = true;
 
     void Start() 
     {

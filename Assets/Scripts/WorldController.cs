@@ -11,9 +11,16 @@ public class WorldController : MonoBehaviour
     public Transform cameraTransform;
     public GameUICanvasController gameUICanvasController;
     public GameOverCanvas gameOverCanvas;
+    public CloudsSpawnerController cloudsSpawnerController;
+    public CameraController cameraController;
 
     private bool gameActive = true;
     private float powerUpTime = 5f;
+
+    void Start()
+    {
+        this.resetActive(false);
+    }
 
     void Update()
     {
@@ -30,6 +37,22 @@ public class WorldController : MonoBehaviour
         }
     }
 
+    void resetActive(bool active)
+    {
+        this.gameActive = active;
+        for (int i = 0; i < this.enemySpawnZones.Length; i++)
+        {
+            this.enemySpawnZones[i].SetActive(active);
+        }
+    }
+
+    public void talismanCaptured()
+    {
+        this.resetActive(true);
+        this.cloudsSpawnerController.shouldSpawnClouds = true;
+        this.cameraController.shouldScroll = true;
+    }
+
     public void updateLives(int lives)
     {
         this.gameUICanvasController.updateLives(lives);
@@ -42,12 +65,8 @@ public class WorldController : MonoBehaviour
 
     public void playerDied(bool runOutOfTime)
     {
-        this.gameActive = false;
-        for (int i = 0; i < this.enemySpawnZones.Length; i++)
-        {
-            this.enemySpawnZones[i].SetActive(false);
-        }
-        
+        this.resetActive(false);
+
         this.gameOverCanvas.gameObject.SetActive(true);
     }
 }

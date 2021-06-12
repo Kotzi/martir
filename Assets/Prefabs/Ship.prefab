@@ -560,7 +560,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7804978923965683805
 Transform:
   m_ObjectHideFlags: 0
@@ -909,6 +909,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8692a40c6f21d4816af2974de9366b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  talisman: {fileID: 5112149168600633868}
   lightsSpriteRenderer: {fileID: 6494745896770624949}
   lastChainJoint: {fileID: 6182299894534361731}
 --- !u!1 &7920876872647676278
@@ -1210,6 +1211,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6483859040422941916}
     m_Modifications:
+    - target: {fileID: 723756238177762294, guid: c2b7c87fad26842f2852c871c6e1293a, type: 3}
+      propertyPath: canBePickedUp
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2951766136429137318, guid: c2b7c87fad26842f2852c871c6e1293a, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -1270,10 +1275,19 @@ PrefabInstance:
       propertyPath: m_Name
       value: Talisman
       objectReference: {fileID: 0}
+    - target: {fileID: 8996995614894996175, guid: c2b7c87fad26842f2852c871c6e1293a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2b7c87fad26842f2852c871c6e1293a, type: 3}
 --- !u!4 &1359938567015310693 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2951766136429137318, guid: c2b7c87fad26842f2852c871c6e1293a, type: 3}
+  m_PrefabInstance: {fileID: 4191091220961814723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5112149168600633868 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8996995614894996175, guid: c2b7c87fad26842f2852c871c6e1293a, type: 3}
   m_PrefabInstance: {fileID: 4191091220961814723}
   m_PrefabAsset: {fileID: 0}

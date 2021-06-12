@@ -6,18 +6,21 @@ public class CloudsSpawnerController: MonoBehaviour
 {
     public GameObject cloudPrefab;
     public GameObject cloudLayer;
-
+    public bool shouldSpawnClouds = false;
     private float cloudSpawnCooldown = 0f;
     private float maxCloudSpawnCooldown = 3f;
     
     void Update()
     {
-        this.cloudSpawnCooldown -= Time.deltaTime;
-
-        if(this.cloudSpawnCooldown <= 0f)
+        if (this.shouldSpawnClouds)
         {
-            Instantiate(this.cloudPrefab, this.transform.position, this.transform.rotation, this.cloudLayer.transform);
-            this.cloudSpawnCooldown = this.maxCloudSpawnCooldown + Random.Range(-0.5f, 0.5f);
+            this.cloudSpawnCooldown -= Time.deltaTime;
+
+            if(this.cloudSpawnCooldown <= 0f)
+            {
+                Instantiate(this.cloudPrefab, this.transform.position, this.transform.rotation, this.cloudLayer.transform);
+                this.cloudSpawnCooldown = this.maxCloudSpawnCooldown + Random.Range(-0.5f, 0.5f);
+            }
         }
     }
 }

@@ -194,6 +194,12 @@ public class PlayerController: MonoBehaviour
         this.shotCooldownTime = Mathf.Clamp(this.shotCooldownTime - 0.01f, MIN_SHOOT_COOLDOWN, 1f);
     }
 
+    public void talismanPickedUp()
+    {
+        this.ship.talismanPickedUp();
+        this.worldController.talismanCaptured();
+    }
+
     void shake()
     {
 
