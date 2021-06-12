@@ -9,6 +9,7 @@ public class PlayerController: MonoBehaviour
     public float shotCooldownTime = 0.05f;
 
     private Rigidbody2D rb;
+    private Animator animator;
     private Camera mainCamera;
     private float horizontal = 0f;
     private float vertical = 0f;
@@ -25,10 +26,11 @@ public class PlayerController: MonoBehaviour
 
     void Start()
     {
-        this.rb = GetComponent<Rigidbody2D>();
+        this.rb = this.GetComponent<Rigidbody2D>();
+        this.animator = this.GetComponent<Animator>();
         this.mainCamera = Camera.main;
 
-        var spriteSize = GetComponent<SpriteRenderer>().bounds.size;
+        var spriteSize = this.GetComponent<SpriteRenderer>().bounds.size;
         this.halfSpriteWidth = spriteSize.x * .5f;
         this.halfSpriteHeight = spriteSize.y * .5f;
 
@@ -67,11 +69,16 @@ public class PlayerController: MonoBehaviour
         if(this.shootCooldown <= 0 && this.shoot)
         {
             this.cannon.fire(true, this.speed.y);
+            this.animator.SetBool("IsAttacking", true);
             //this.rb.AddForce(this.baseRecoil * Mathf.Exp(this.shootPower) * Vector2.down);
 
             this.shake();
 
             this.shootCooldown = this.shotCooldownTime;
+        }
+        else
+        {
+            this.animator.SetBool("IsAttacking", false);
         }
     }
 
