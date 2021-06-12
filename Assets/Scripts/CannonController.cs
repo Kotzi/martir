@@ -6,11 +6,16 @@ public class CannonController : MonoBehaviour
     public GameObject shot;
     public float damage = 10f;
     
-    public void fire(Vector2 direction, Vector2 baseVelocity)
+    private WorldController worldController;
+
+    void Start()
     {
-        print("cannon FIRE");
-        ShotController shot = Instantiate(this.shot, transform.position, transform.rotation, transform.parent).GetComponent<ShotController>();
-        //shot.WorldController = WorldController;
-        shot.fire(direction, baseVelocity, this.damage);
+        this.worldController = Object.FindObjectOfType<WorldController>();
+    }
+
+    public void fire(bool up, float baseSpeed)
+    {
+        ShotController shot = Instantiate(this.shot, transform.position, transform.rotation, this.worldController.transform.parent).GetComponent<ShotController>();
+        shot.fire(up, baseSpeed, this.damage);
     }
 }

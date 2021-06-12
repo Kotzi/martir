@@ -5,7 +5,7 @@ public class ShotController: MonoBehaviour
 {
     private const float destructionDuration = 1f;
 
-    public float speed = 40f;
+    public float speed = 20f;
     private Rigidbody2D rb;
     private SpriteRenderer sp;
     private float hitPower = 0f;
@@ -16,18 +16,18 @@ public class ShotController: MonoBehaviour
         this.sp = GetComponent<SpriteRenderer>();
     }
 
-    public void fire(Vector2 direction, Vector2 baseVelocity, float hitPower) 
+    public void fire(bool up, float baseVelocity, float hitPower) 
     {
-        print("shot FIRE");
+        var angle = up ? 90f : -90f;
+        this.transform.eulerAngles = new Vector3(0f, 0f, angle);
 
-        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        var direction = up ? Vector2.up : Vector2.down;
 
         this.hitPower = hitPower;
 
-        this.rb.velocity = baseVelocity + direction * this.speed;
+        this.rb.angularVelocity = 0f;
+        this.rb.velocity = direction * (this.speed + baseVelocity);
     }
-
     void OnCollisionEnter2D(Collision2D collision) 
     {
         IDamageable damageable = collision.collider.gameObject.GetComponent<IDamageable>();
@@ -46,7 +46,6 @@ public class ShotController: MonoBehaviour
 
     void destroyed(bool animated)
     {
-        print("DESTROYED");
         if(!animated) {
             Destroy(gameObject);
             return;

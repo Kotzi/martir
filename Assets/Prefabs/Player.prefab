@@ -121,8 +121,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.27, y: -0.22}
-  m_Size: {x: 1.73, y: 4.09}
+  m_Offset: {x: -0.2543619, y: -0.03213031}
+  m_Size: {x: 1.4797921, y: 3.6205885}
   m_Direction: 0
 --- !u!114 &2141938501500063096
 MonoBehaviour:
@@ -137,7 +137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cannon: {fileID: 3792063970919529685}
-  speed: 10
   shotCooldownTime: 0.2
 --- !u!114 &915627833186606514
 MonoBehaviour:
@@ -164,11 +163,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3493927545314916986, guid: 69f7791cb8e1a4c22a4d2f9d59418a41, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.78
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 3493927545314916986, guid: 69f7791cb8e1a4c22a4d2f9d59418a41, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.24
+      value: 2.85
       objectReference: {fileID: 0}
     - target: {fileID: 3493927545314916986, guid: 69f7791cb8e1a4c22a4d2f9d59418a41, type: 3}
       propertyPath: m_LocalPosition.z
