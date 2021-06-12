@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class PlayerController: MonoBehaviour
 {
+    const int MAX_SHOOTS = 4;
     const float MAX_SPEED = 5f;
+    const float MIN_SHOOT_COOLDOWN = 0.01f;
     const float ACCELERATION = 7.5f;
 
     public CannonController cannon;
@@ -26,6 +28,7 @@ public class PlayerController: MonoBehaviour
     private float halfSpriteWidth;
     private float cameraHeight;
     private float halfSpriteHeight;
+    private int maxShoots = 1;
 
     void Start()
     {
@@ -75,7 +78,7 @@ public class PlayerController: MonoBehaviour
         this.shootCooldown -= Time.deltaTime;
         if(this.shootCooldown <= 0 && this.shoot)
         {
-            this.cannon.fire(this.speed.y, this.isConnected() ? 2f : 1f);
+            this.cannon.fire(this.maxShoots, this.speed.y, this.isConnected() ? 2f : 1f);
             this.animator.SetBool("IsAttacking", true);
             //this.rb.AddForce(this.baseRecoil * Mathf.Exp(this.shootPower) * Vector2.down);
 
@@ -137,6 +140,16 @@ public class PlayerController: MonoBehaviour
                 this.chainConnector.enabled = true;
             }
         }
+    }
+
+    public void addMoreShoots()
+    {
+        this.maxShoots = Mathf.Clamp(this.maxShoots + 1, 0, MAX_SHOOTS);
+    }
+
+    public void reduceShootCooldown()
+    {
+        this.shotCooldownTime = Mathf.Clamp(this.shotCooldownTime - 0.01f, MIN_SHOOT_COOLDOWN, 1f);
     }
 
     void shake()

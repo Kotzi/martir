@@ -137,7 +137,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0.65}
-  m_ConnectedAnchor: {x: 0.01217378, y: 0.077095546}
+  m_ConnectedAnchor: {x: 0.012173802, y: 0.077095926}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -389,7 +389,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0.65}
-  m_ConnectedAnchor: {x: 0.037544664, y: -0.66831386}
+  m_ConnectedAnchor: {x: 0.037545078, y: -0.6683142}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -535,7 +535,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0.65}
-  m_ConnectedAnchor: {x: -0.08119018, y: -0.6457338}
+  m_ConnectedAnchor: {x: -0.08118991, y: -0.6457341}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -763,7 +763,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0.65}
-  m_ConnectedAnchor: {x: -0.07049845, y: -0.5726586}
+  m_ConnectedAnchor: {x: -0.07049826, y: -0.57265866}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -801,7 +801,7 @@ Transform:
   m_GameObject: {fileID: 7874466907861800120}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.35, y: 0.35, z: 0.35}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
   - {fileID: 7804978923965683805}
   - {fileID: 1359938567015310693}
@@ -1048,7 +1048,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0.65}
-  m_ConnectedAnchor: {x: -0.03482735, y: -0.588976}
+  m_ConnectedAnchor: {x: -0.034827508, y: -0.5889759}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1194,7 +1194,7 @@ HingeJoint2D:
   m_BreakTorque: Infinity
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0.65}
-  m_ConnectedAnchor: {x: -0.055699274, y: -0.63439864}
+  m_ConnectedAnchor: {x: -0.05569945, y: -0.63439816}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0

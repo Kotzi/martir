@@ -17,7 +17,7 @@ public class EnemySpawnZoneController: MonoBehaviour
         {
             var prefab = Random.value >= 0.5f ? this.smallEnemyPrefab : this.enemyPrefab;
             Instantiate(prefab, this.transform.position, this.transform.rotation, this.transform.parent);
-            this.enemySpawnCooldown = this.maxEnemySpawnCooldown;
+            this.enemySpawnCooldown = this.maxEnemySpawnCooldown + Random.Range(-1f, 1f);
         }
     }
 }
