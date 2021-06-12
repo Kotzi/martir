@@ -31,7 +31,7 @@ public class EnemyController: MonoBehaviour, IDamageable
         {
             if(Mathf.Abs(this.ship.transform.position.y - this.transform.position.y) > 1f) 
             {
-                this.transform.position -= new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(-2.5f, 2.5f), 0) * Time.deltaTime;
+                this.transform.position -= new Vector3(Random.Range(-2.5f, 2.5f), Random.Range(5.5f, 2.5f), 0) * Time.deltaTime;
             }
             else
             {

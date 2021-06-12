@@ -4,12 +4,12 @@ public class FixedRotation: MonoBehaviour
 {
     private Quaternion fixedRotation;
 
-    void Start()
+    void Awake()
     {
         this.fixedRotation = this.transform.rotation;
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
         this.transform.rotation = this.fixedRotation;
     }

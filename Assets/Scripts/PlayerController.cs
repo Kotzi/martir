@@ -2,8 +2,10 @@ using UnityEngine;
 
 public class PlayerController: MonoBehaviour
 {
+    const float MAX_SPEED = 5f;
+    const float ACCELERATION = 7.5f;
+
     public CannonController cannon;
-    public float speed = 10.0f;
     public float shotCooldownTime = 0.2f;
 
     private Rigidbody2D rb;
@@ -13,6 +15,7 @@ public class PlayerController: MonoBehaviour
     private float shootCooldown = 0f;
     private float shootPower = 4f;
     private bool shoot = false;
+    private Vector2 speed = Vector2.zero;
 
     void Start()
     {
@@ -35,7 +38,17 @@ public class PlayerController: MonoBehaviour
             this.vertical *= moveLimiter;
         } 
 
-        this.rb.velocity = new Vector2(this.horizontal * this.speed, this.vertical * this.speed);
+        if (this.horizontal != 0)
+        {
+            this.speed.x = Mathf.Clamp(this.speed.x + ACCELERATION * Time.deltaTime, -MAX_SPEED, MAX_SPEED);
+        }
+
+        if (this.vertical != 0)
+        {
+            this.speed.y = Mathf.Clamp(this.speed.y + ACCELERATION * Time.deltaTime, -MAX_SPEED, MAX_SPEED);
+        }
+
+        this.rb.velocity = new Vector2(this.horizontal, this.vertical) * this.speed;
 
         this.shootCooldown -= Time.deltaTime;
         if(this.shootCooldown <= 0 && this.shoot)
