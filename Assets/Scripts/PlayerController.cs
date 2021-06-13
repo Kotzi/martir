@@ -117,7 +117,6 @@ public class PlayerController: MonoBehaviour
         }
 
         this.rb.velocity = new Vector2(this.horizontal, this.vertical) * this.speed;
-        print(this.rb.velocity);
 
         this.shootCooldown -= Time.deltaTime;
         if(this.shootCooldown <= 0 && this.shoot)
@@ -155,7 +154,7 @@ public class PlayerController: MonoBehaviour
         EnemyController enemy = collision.collider.GetComponent<EnemyController>();
         if (enemy)
         {
-            this.lives -= 1;
+            this.lives = Mathf.Clamp(this.lives - 1, 0, MAX_LIVES);
             this.worldController.updateLives(this.lives);
             enemy.destroyByPlayerImpact();
 
