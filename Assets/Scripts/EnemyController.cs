@@ -88,9 +88,11 @@ public class EnemyController: MonoBehaviour, IDamageable
         
         DOTween.Sequence()
                 .Append(this.sr.DOFade(0.25f, 0.15f))
-                .Append(this.transform.DOScale(this.transform.localScale * 0.25f, 0.3f))
+                .Append(this.transform.DOScale(this.transform.localScale * 1.25f, 0.15f))
                 .OnComplete(() => {
-                    Destroy(gameObject);
+                    this.transform.DOScale(this.transform.localScale * 0.25f, 0.1f).OnComplete(() => {
+                        Destroy(gameObject);
+                    });
                 });
     }
 }

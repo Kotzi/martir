@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CameraController: MonoBehaviour
 {
-    const float VELOCITY = 0.75f;
+    const float VELOCITY = 4f;
     public bool shouldScroll = false;
     void LateUpdate()
     {
