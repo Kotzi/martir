@@ -9,6 +9,7 @@ public class PowerUpController: MonoBehaviour
 
     private float lifetime;
     private Vector3 originalScale;
+    private bool isDestroying = false;
 
     void Awake()
     {
@@ -35,29 +36,47 @@ public class PowerUpController: MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collider)
     {
-        var player = collider.GetComponent<PlayerController>();
-        if (player != null) 
+        if (!this.isDestroying)
         {
-            if (cooldown) 
+            var player = collider.GetComponent<PlayerController>();
+            if (player != null) 
             {
-                player.reduceShootCooldown();
-            }
+                this.GetComponent<AudioSource>().Play();
 
-            if (shoots) 
-            {
-                player.addMoreShoots();
-            }
+                if (cooldown) 
+                {
+                    player.reduceShootCooldown();
+                }
 
-            this.destroy(true);
+                if (shoots) 
+                {
+                    player.addMoreShoots();
+                }
+
+                this.destroy(true);
+            }
         }
     }
 
     public void destroy(bool pickedUp)
     {
-        this.transform
+        if (!this.isDestroying) 
+        {
+            this.isDestroying = true;
+
+            this.transform
                 .DOScale(this.transform.localScale * (pickedUp ? 1.25f : 0.25f), 0.1f)
                 .OnComplete(() => {
-                    Destroy(this.gameObject);
+                    if (pickedUp)
+                    {
+                        Destroy(this.GetComponent<SpriteRenderer>());
+                        Destroy(this.gameObject, 1.05f);
+                    }
+                    else
+                    {
+                        Destroy(this.gameObject);
+                    }
                 });
+        }
     }
 }
