@@ -5,18 +5,23 @@ public class PowerUpController: MonoBehaviour
 {
     public bool cooldown;
     public bool shoots;
+    public float destinationY;
 
     private float lifetime;
+    private Vector3 originalScale;
 
     void Awake()
     {
         this.lifetime = Random.Range(5f, 8f);
-        this.transform.localScale *= 0.5f;
+        this.originalScale = this.transform.localScale;
+        this.transform.localScale = this.originalScale * 0.5f;
     }
 
     void Start()
     {
-        this.transform.DOScale(Vector3.one, 0.1f);
+        DOTween.Sequence()
+                .Append(this.transform.DOScale(this.originalScale, 0.1f))
+                .Append(this.transform.DOLocalMoveY(destinationY, 0.1f));
     }
 
     void Update()
@@ -47,7 +52,7 @@ public class PowerUpController: MonoBehaviour
         }
     }
 
-    void destroy(bool pickedUp)
+    public void destroy(bool pickedUp)
     {
         this.transform
                 .DOScale(this.transform.localScale * (pickedUp ? 1.25f : 0.25f), 0.1f)

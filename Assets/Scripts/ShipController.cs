@@ -8,10 +8,11 @@ public class ShipController: MonoBehaviour
     public GameObject talisman;
     public SpriteRenderer lightsSpriteRenderer;
     public Rigidbody2D lastChainJoint;
+    private bool isDestroying = false;
 
     void Update()
     {
-        if (!this.player.isConnected())
+        if (this.player && !this.player.isConnected())
         {
             this.lastChainJoint.velocity = new Vector2(Random.Range(-1.5f, 1.5f), 1f) * JOINT_VELOCITY;
         }
@@ -30,5 +31,14 @@ public class ShipController: MonoBehaviour
             .Append(this.lightsSpriteRenderer.DOFade(0.7f, 0.15f))
             .Append(this.lightsSpriteRenderer.DOFade(1f, 0.1f))
             .SetLoops(-1);
+    }
+
+    public void destroyShip()
+    {
+        if (!this.isDestroying)
+        {
+            this.isDestroying = true;
+            Destroy(this.gameObject);
+        }
     }
 }

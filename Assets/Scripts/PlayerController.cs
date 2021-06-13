@@ -15,12 +15,16 @@ public class PlayerController: MonoBehaviour
     public WorldController worldController;
     public CannonController cannon;
     public ShipController ship;
+    public AudioClip chainConnectedAudio;
+    public AudioClip chainDisconnectedAudio;
     public float shotCooldownTime = 0.05f;
+    public bool finalBattle = false;
 
     private Rigidbody2D rb;
     private Animator animator;
     private HingeJoint2D chainConnector;
     private Camera mainCamera;
+    private AudioSource mainAudio;
     private float horizontal = 0f;
     private float vertical = 0f;
     private float moveLimiter = 0.7f;
@@ -38,10 +42,12 @@ public class PlayerController: MonoBehaviour
     private int lives = MAX_LIVES;
     private float isDesconnectingTimer = 2f;
     private bool facingRight = true;
+
     void Start()
     {
         this.rb = this.GetComponent<Rigidbody2D>();
         this.animator = this.GetComponent<Animator>();
+        this.mainAudio = this.GetComponent<AudioSource>();
         this.chainConnector = this.GetComponent<HingeJoint2D>();
         this.chainConnector.enabled = false;
         this.chainConnector.connectedBody = this.ship.lastChainJoint;
@@ -128,7 +134,7 @@ public class PlayerController: MonoBehaviour
             this.animator.SetBool("IsAttacking", false);
         }
 
-        if(this.connect)
+        if(this.connect && !this.finalBattle)
         {
             if(!this.isConnected())
             {
@@ -227,7 +233,14 @@ public class PlayerController: MonoBehaviour
         if (isConnected)
         {
             this.ship.lastChainJoint.velocity = (this.ship.lastChainJoint.position - (Vector2)this.chainConnector.transform.position);
+            this.mainAudio.clip = this.chainConnectedAudio;
         }
+        else
+        {
+            this.mainAudio.clip = this.chainDisconnectedAudio;
+        }
+
+        this.mainAudio.Play();
 
         this.chainConnector.enabled = isConnected;
         this.countdown = isConnected ? -1 : MAX_COUNTDOWN;
@@ -236,7 +249,11 @@ public class PlayerController: MonoBehaviour
     
     public bool isConnected()
     {
-        if (this.chainConnector) 
+        if (this.finalBattle)
+        {
+            return false;
+        }
+        else if (this.chainConnector) 
         {
             return this.chainConnector.enabled;
         }
@@ -244,6 +261,12 @@ public class PlayerController: MonoBehaviour
         {
             return false;
         }
+    }
+
+    public void finalBattleStarted()
+    {
+        this.finalBattle = true;
+        this.setIsConnected(false);
     }
 
     void playerDied(bool runOutOfTime)

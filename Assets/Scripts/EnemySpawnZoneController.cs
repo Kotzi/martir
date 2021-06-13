@@ -6,6 +6,8 @@ public class EnemySpawnZoneController: MonoBehaviour
 {  
     public GameObject enemyPrefab;
     public GameObject smallEnemyPrefab;
+    public WorldController worldController;
+
     private float enemySpawnCooldown = 2f;
     private float maxEnemySpawnCooldown = 2f;
     
@@ -16,7 +18,8 @@ public class EnemySpawnZoneController: MonoBehaviour
         if(this.enemySpawnCooldown <= 0f)
         {
             var prefab = Random.value >= 0.5f ? this.smallEnemyPrefab : this.enemyPrefab;
-            Instantiate(prefab, this.transform.position, this.transform.rotation, this.transform.parent);
+            var enemy = Instantiate(prefab, this.transform.position, this.transform.rotation, this.transform.parent).GetComponent<EnemyController>();
+            enemy.worldController = this.worldController;
             this.enemySpawnCooldown = this.maxEnemySpawnCooldown + Random.Range(-1f, 1f);
         }
     }

@@ -6,6 +6,8 @@ public class WorldController : MonoBehaviour
 {
     const float POWER_UP_MAX_TIME = 5f;
     const float NEEDS_MORE_ENEMIES_TIME = 3f;
+    const int MAX_ATTACHED_ENEMIES = 5;
+
     public GameObject shootPowerUpPrefab;
     public GameObject cooldownPowerUpPrefab;
     public SceneManagerController sceneManager;
@@ -13,17 +15,29 @@ public class WorldController : MonoBehaviour
     public Transform cameraTransform;
     public GameUICanvasController gameUICanvasController;
     public GameOverCanvas gameOverCanvas;
+    public YouWonCanvas youWonCanvas;
     public CloudsSpawnerController cloudsSpawnerController;
     public CameraController cameraController;
+    public ShipController ship;
+    public FinalBossController finalBoss;
+    public TalismanController finalTalisman;
+    public PlayerController player;
 
     private bool gameActive = true;
     private float powerUpTime = 5f;
     private int needsMoreEnemies = 2;
     private float addMoreEnemiesTime = NEEDS_MORE_ENEMIES_TIME;
+    private int attachedEnemies = 0;
 
     void Start()
     {
         this.sceneManager.currentSceneIndex = 1;
+        
+        for (int i = 0; i < this.enemySpawnZones.Length; i++)
+        {
+            this.enemySpawnZones[i].GetComponent<EnemySpawnZoneController>().worldController = this;
+        }
+        
         this.resetActive(false, 5);
     }
 
@@ -35,8 +49,10 @@ public class WorldController : MonoBehaviour
 
             if (this.powerUpTime <= 0)
             {
+                var finalPosition = new Vector3(Random.Range(-3f, 3f), Random.Range(0.5f, 5f), 10f);
                 var powerUp = Instantiate((Random.value >= 0.5 ? this.shootPowerUpPrefab : this.cooldownPowerUpPrefab), this.cameraTransform.position, this.cameraTransform.rotation, this.cameraTransform);
-                powerUp.transform.localPosition = new Vector3(Random.Range(-3f, 3f), Random.Range(0.5f, 5f), 10f);
+                powerUp.GetComponent<PowerUpController>().destinationY = finalPosition.y;
+                powerUp.transform.localPosition = new Vector3(finalPosition.x, 7f, finalPosition.z);
                 this.powerUpTime = POWER_UP_MAX_TIME;
             }
 
@@ -124,5 +140,37 @@ public class WorldController : MonoBehaviour
         this.resetActive(false, 5);
 
         this.gameOverCanvas.gameObject.SetActive(true);
+    }
+
+    public void playerWon()
+    {
+        this.resetActive(false, 5);
+        
+        this.youWonCanvas.gameObject.SetActive(true);
+    }
+
+    public void increaseAttachedEnemies(GameObject enemy)
+    {
+        enemy.transform.parent = this.finalBoss.transform;
+
+        this.attachedEnemies += 1;
+
+        if (this.attachedEnemies >= MAX_ATTACHED_ENEMIES)
+        {
+            this.finalTalisman = this.ship.talisman.GetComponent<TalismanController>();
+            this.finalTalisman.transform.parent = this.finalBoss.transform;
+            this.ship.destroyShip();
+            this.resetActive(false, 5);
+
+            var powerUps = Object.FindObjectsOfType<PowerUpController>();
+            for (int i = 0; i < powerUps.Length; i++)
+            {
+                powerUps[i].destroy(false);
+            }
+
+            this.finalBoss.fightStarted();
+            this.player.finalBattleStarted();
+            this.finalTalisman.isFinalBattle = true;
+        }
     }
 }

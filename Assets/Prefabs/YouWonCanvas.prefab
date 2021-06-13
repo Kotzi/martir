@@ -142,7 +142,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Retry
+  m_text: Play again
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -332,8 +332,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6894037957429157436}
-        m_TargetAssemblyTypeName: GameOverCanvas, Assembly-CSharp
+      - m_Target: {fileID: 2953574330707645615}
+        m_TargetAssemblyTypeName: YouWonCanvas, Assembly-CSharp
         m_MethodName: onRetryButtonTapped
         m_Mode: 1
         m_Arguments:
@@ -409,7 +409,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GAME OVER
+  m_text: YOU WON
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -490,9 +490,9 @@ GameObject:
   - component: {fileID: 7954421726459256487}
   - component: {fileID: 3712193952348844671}
   - component: {fileID: 4272653730967443398}
-  - component: {fileID: 6894037957429157436}
+  - component: {fileID: 2953574330707645615}
   m_Layer: 5
-  m_Name: GameOverCanvas
+  m_Name: YouWonCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -579,7 +579,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6894037957429157436
+--- !u!114 &2953574330707645615
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -588,7 +588,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8396433179161076000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5893f3158859f4497834ea488daa9bfe, type: 3}
+  m_Script: {fileID: 11500000, guid: f83023726934847e9b5538b073a6f3fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sceneManager: {fileID: 0}

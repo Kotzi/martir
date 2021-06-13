@@ -4,6 +4,7 @@ using DG.Tweening;
 public class TalismanController: MonoBehaviour
 {
     public bool canBePickedUp = true;
+    public bool isFinalBattle = false;
 
     void Start()
     {
@@ -24,6 +25,14 @@ public class TalismanController: MonoBehaviour
                     player.talismanPickedUp();
                     Destroy(this.gameObject);
                 });
+            }
+        }
+        else if (this.isFinalBattle)
+        {
+            var player = collider.GetComponent<PlayerController>();
+            if (player != null) 
+            {
+                player.worldController.playerWon();
             }
         }
     }
