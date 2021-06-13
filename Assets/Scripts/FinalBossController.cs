@@ -15,7 +15,7 @@ public class FinalBossController : MonoBehaviour
         var enemies = this.GetComponentsInChildren<EnemyController>();
         for (int i = 0; i < enemies.Length; i++)
         {
-            enemies[i].health *= 2f;
+            enemies[i].health *= 1.1f;
             enemies[i].isMovingToBoss = true;
         }
 
@@ -61,6 +61,7 @@ public class FinalBossController : MonoBehaviour
                     if (i == 0)
                     {
                         firstPosition = enemies[i].transform.position;
+                        container.transform.position = firstPosition;
                     }
                     else
                     {
@@ -68,7 +69,14 @@ public class FinalBossController : MonoBehaviour
                         enemies[i].transform.position = newPosition;
                     }
                 }
-                container.transform.DOMove(this.player.transform.position * -1.5f, 0.5f);
+                container.transform.DOLocalMove(this.player.transform.position - firstPosition, 0.5f).OnComplete(() => {
+                    var enemies = container.GetComponentsInChildren<EnemyController>();
+                    for (int i = 0; i < enemies.Length; i++)
+                    {
+                        enemies[i].transform.parent = this.transform;
+                    }
+                    container.transform.DOMove(this.transform.position, 0.25f);
+                });
         
                 this.attackCooldown = MAX_ATTACK_COOLDOWN + Random.Range(-1f, 1f);
             }

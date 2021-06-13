@@ -8,6 +8,13 @@ public class WorldController : MonoBehaviour
     const float NEEDS_MORE_ENEMIES_TIME = 3f;
     const int MAX_ATTACHED_ENEMIES = 20;
 
+    public AudioClip stage1Clip;
+    public AudioClip stage2Clip;
+    public AudioClip stage3Clip;
+    public AudioClip youLostClip;
+    public AudioClip youWonClip;
+    public AudioSource mainAudio;
+    public AudioSource oneShotAudio;
     public GameObject shootPowerUpPrefab;
     public GameObject cooldownPowerUpPrefab;
     public SceneManagerController sceneManager;
@@ -126,6 +133,8 @@ public class WorldController : MonoBehaviour
 
     public void talismanCaptured()
     {
+        this.mainAudio.clip = this.stage2Clip;
+        this.mainAudio.Play();
         this.resetActive(true, 1);
         this.cloudsSpawnerController.shouldSpawnClouds = true;
         this.cameraController.shouldScroll = true;
@@ -149,6 +158,9 @@ public class WorldController : MonoBehaviour
 
             this.resetActive(false, 5);
 
+            this.mainAudio.Stop();
+            this.oneShotAudio.clip = this.youLostClip;
+            this.oneShotAudio.Play();
             this.gameOverCanvas.gameObject.SetActive(true);
         }
     }
@@ -161,6 +173,9 @@ public class WorldController : MonoBehaviour
 
             this.resetActive(false, 5);
             
+            this.mainAudio.Stop();
+            this.oneShotAudio.clip = this.youWonClip;
+            this.oneShotAudio.Play();
             this.youWonCanvas.gameObject.SetActive(true);
         }
     }
@@ -173,6 +188,9 @@ public class WorldController : MonoBehaviour
 
         if (this.attachedEnemies >= MAX_ATTACHED_ENEMIES)
         {
+            this.mainAudio.clip = this.stage3Clip;
+            this.mainAudio.Play();
+
             this.finalTalisman = this.ship.talisman.GetComponent<TalismanController>();
             this.finalTalisman.transform.parent = this.finalBoss.transform;
             this.ship.destroyShip();

@@ -21,6 +21,7 @@ public class PlayerController: MonoBehaviour
     public bool finalBattle = false;
 
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
     private Animator animator;
     private Camera mainCamera;
     private AudioSource mainAudio;
@@ -45,6 +46,7 @@ public class PlayerController: MonoBehaviour
     void Start()
     {
         this.rb = this.GetComponent<Rigidbody2D>();
+        this.sr = this.GetComponent<SpriteRenderer>();
         this.animator = this.GetComponent<Animator>();
         this.mainAudio = this.GetComponent<AudioSource>();
         this.mainCamera = Camera.main;
@@ -156,6 +158,11 @@ public class PlayerController: MonoBehaviour
         if (enemy && !enemy.isMovingToBoss)
         {
             this.lives = Mathf.Clamp(this.lives - 1, 0, MAX_LIVES);
+
+            DOTween.Sequence()
+                    .Append(this.sr.DOFade(0.65f, 0.15f))
+                    .Append(this.sr.DOFade(1f, 0.05f));
+
             this.worldController.updateLives(this.lives);
             enemy.destroyByPlayerImpact();
 

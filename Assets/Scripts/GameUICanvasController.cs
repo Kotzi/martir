@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class GameUICanvasController: MonoBehaviour
 {
     public TMP_Text livesText;
+    public Image countdownImage;
     public TMP_Text countdownText;
     public CanvasRenderer mobileCanvas;
     public ShootButton shootButton;
@@ -26,6 +28,7 @@ public class GameUICanvasController: MonoBehaviour
     {
         if (countdown != -1)
         {
+            this.countdownImage.enabled = true;
             this.countdownText.enabled = true;
             this.countdownText.transform.localScale = Vector3.one;
             this.countdownText.text = countdown.ToString();
@@ -33,6 +36,8 @@ public class GameUICanvasController: MonoBehaviour
         }
         else 
         {
+            this.countdownText.transform.localScale = Vector3.one;
+            this.countdownImage.enabled = false;
             this.countdownText.enabled = false;
         }
     }
