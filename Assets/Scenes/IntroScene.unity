@@ -859,6 +859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   story1Sprite: {fileID: 21300000, guid: 9d79d2db8d8c84f87a6754d8a0bb2f56, type: 3}
   story2Sprite: {fileID: 21300000, guid: 8127c7b4e8ec0422d8c8e4d9dd896df5, type: 3}
+  story3Sprite: {fileID: 21300000, guid: 49d9b96d7a9524b9f80bd5dd4f0987ce, type: 3}
   mainImage: {fileID: 1354305990}
   mainText: {fileID: 1005874189}
   sceneManager: {fileID: 903795767}

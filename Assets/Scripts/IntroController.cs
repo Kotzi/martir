@@ -7,6 +7,7 @@ public class IntroController : MonoBehaviour
 {
     public Sprite story1Sprite;
     public Sprite story2Sprite;
+    public Sprite story3Sprite;
     public Image mainImage;
     public TMP_Text mainText;
     public SceneManagerController sceneManager;
@@ -26,7 +27,11 @@ public class IntroController : MonoBehaviour
         {
             this.mainImage.sprite = this.story2Sprite;
         }
-        else
+        else if (this.stage == 2)
+        {
+            this.mainImage.sprite = this.story3Sprite;
+        }
+        else 
         {
             this.sceneManager.goToNextScene();
         }

@@ -24,6 +24,7 @@ public class WorldController : MonoBehaviour
     public PlayerController player;
 
     private bool gameActive = true;
+    private bool gameFinished = false;
     private float powerUpTime = 5f;
     private int needsMoreEnemies = 2;
     private float addMoreEnemiesTime = NEEDS_MORE_ENEMIES_TIME;
@@ -142,16 +143,26 @@ public class WorldController : MonoBehaviour
 
     public void playerDied(bool runOutOfTime)
     {
-        this.resetActive(false, 5);
+        if (!this.gameFinished)
+        {
+            this.gameFinished = true;
 
-        this.gameOverCanvas.gameObject.SetActive(true);
+            this.resetActive(false, 5);
+
+            this.gameOverCanvas.gameObject.SetActive(true);
+        }
     }
 
     public void playerWon()
     {
-        this.resetActive(false, 5);
-        
-        this.youWonCanvas.gameObject.SetActive(true);
+        if (!this.gameFinished)
+        {
+            this.gameFinished = true;
+
+            this.resetActive(false, 5);
+            
+            this.youWonCanvas.gameObject.SetActive(true);
+        }
     }
 
     public void increaseAttachedEnemies(GameObject enemy)
