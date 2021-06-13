@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 2141938501500063096}
   - component: {fileID: 915627833186606514}
   - component: {fileID: 4808065597572174143}
-  - component: {fileID: 126096782889046440}
   - component: {fileID: 3515573788168471066}
   m_Layer: 3
   m_Name: Player
@@ -139,6 +138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8207b82efb6d4c72bb8f6e07c15ff4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mobileGameUICanvasController: {fileID: 0}
   worldController: {fileID: 0}
   cannon: {fileID: 3792063970919529685}
   ship: {fileID: 0}
@@ -177,30 +177,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!233 &126096782889046440
-HingeJoint2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6760588922706620707}
-  m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 0}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 1
-  m_Anchor: {x: -0.85, y: 1.19}
-  m_ConnectedAnchor: {x: -0.17, y: 0.23800002}
-  m_UseMotor: 0
-  m_Motor:
-    m_MotorSpeed: 0
-    m_MaximumMotorForce: 10000
-  m_UseLimits: 0
-  m_AngleLimits:
-    m_LowerAngle: 0
-    m_UpperAngle: 359
 --- !u!82 &3515573788168471066
 AudioSource:
   m_ObjectHideFlags: 0

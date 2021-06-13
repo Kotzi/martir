@@ -5,8 +5,6 @@ using DG.Tweening;
 public class PlayerController: MonoBehaviour
 {
     const int MAX_COUNTDOWN = 15;
-    const float DISCONNECTION_TIMER = 2f;
-    const float DISCONNECTION_SPEED = 30f;
     const int MAX_LIVES = 5;
     const int MAX_SHOOTS = 4;
     const float MAX_SPEED = 5f;
@@ -14,7 +12,6 @@ public class PlayerController: MonoBehaviour
     const float ACCELERATION = 7.5f;
 
     public GameUICanvasController mobileGameUICanvasController;
-
     public WorldController worldController;
     public CannonController cannon;
     public ShipController ship;
@@ -25,7 +22,6 @@ public class PlayerController: MonoBehaviour
 
     private Rigidbody2D rb;
     private Animator animator;
-    private HingeJoint2D chainConnector;
     private Camera mainCamera;
     private AudioSource mainAudio;
     private float horizontal = 0f;
@@ -33,7 +29,6 @@ public class PlayerController: MonoBehaviour
     private float moveLimiter = 0.7f;
     private float shootCooldown = 0f;
     private bool shoot = false;
-    private bool connect = false;
     private Vector2 speed = Vector2.zero;
     private float cameraWidth;
     private float halfSpriteWidth;
@@ -43,17 +38,14 @@ public class PlayerController: MonoBehaviour
     private int countdown = MAX_COUNTDOWN;
     private float countdownTimer = 1f;
     private int lives = MAX_LIVES;
-    private float isDesconnectingTimer = 2f;
     private bool facingRight = true;
+    private bool isInSafeArea = true;
 
     void Start()
     {
         this.rb = this.GetComponent<Rigidbody2D>();
         this.animator = this.GetComponent<Animator>();
         this.mainAudio = this.GetComponent<AudioSource>();
-        this.chainConnector = this.GetComponent<HingeJoint2D>();
-        this.chainConnector.enabled = false;
-        this.chainConnector.connectedBody = this.ship.lastChainJoint;
         this.mainCamera = Camera.main;
 
         var spriteSize = this.GetComponent<SpriteRenderer>().bounds.size;
@@ -66,16 +58,21 @@ public class PlayerController: MonoBehaviour
 
     void Update()
     {
-        this.horizontal = ( this.mobileGameUICanvasController ? this.mobileGameUICanvasController.joystick.Horizontal : Input.GetAxisRaw("Horizontal"));
-        this.vertical = ( this.mobileGameUICanvasController ? this.mobileGameUICanvasController.joystick.Vertical : Input.GetAxisRaw("Vertical"));
-        this.shoot = ( this.mobileGameUICanvasController ? this.mobileGameUICanvasController.shootButton.isPressed : Input.GetButton("Shoot"));
-        this.connect = Input.GetButton("Connect");
-    
-        if (this.isDesconnectingTimer > 0)
+        if (this.mobileGameUICanvasController)
         {
-            this.isDesconnectingTimer -= Time.deltaTime;
+            this.horizontal = this.mobileGameUICanvasController.joystick.Horizontal;
+            this.vertical = this.mobileGameUICanvasController.joystick.Vertical;
+            this.shoot = this.mobileGameUICanvasController.shootButton.isPressed;
         }
-        else if (!this.isConnected())
+        else
+        {
+            this.horizontal = Input.GetAxisRaw("Horizontal");
+            this.vertical = Input.GetAxisRaw("Vertical");
+            this.shoot = Input.GetButton("Shoot");
+
+        }
+    
+        if (!this.isConnected())
         {
             this.countdownTimer -= Time.deltaTime;
             if (this.countdownTimer <= 0)
@@ -120,6 +117,7 @@ public class PlayerController: MonoBehaviour
         }
 
         this.rb.velocity = new Vector2(this.horizontal, this.vertical) * this.speed;
+        print(this.rb.velocity);
 
         this.shootCooldown -= Time.deltaTime;
         if(this.shootCooldown <= 0 && this.shoot)
@@ -136,39 +134,13 @@ public class PlayerController: MonoBehaviour
         {
             this.animator.SetBool("IsAttacking", false);
         }
-
-        if(this.connect && !this.finalBattle)
-        {
-            if(!this.isConnected())
-            {
-                if(Vector2.Distance(this.chainConnector.transform.position, this.ship.lastChainJoint.transform.position) < 1f) 
-                {
-                    this.setIsConnected(true);
-                }
-            }
-            else
-            {
-                this.setIsConnected(false);
-                this.isDesconnectingTimer = DISCONNECTION_TIMER;
-                this.rb.velocity += Vector2.up * DISCONNECTION_SPEED;
-            }
-        }
     }
 
     void LateUpdate()
     {
         var yMin = this.mainCamera.transform.position.y - this.cameraHeight + this.halfSpriteHeight; // lower bound
-        var yMax = this.mainCamera.transform.position.y; // upper bound
-        
-        if(this.isConnected())
-        {
-            yMax -= this.cameraHeight * 0.4f;
-        } 
-        else 
-        {
-            yMax += this.cameraHeight - this.halfSpriteHeight;
-        }
-         
+        var yMax = this.mainCamera.transform.position.y + this.cameraHeight - this.halfSpriteHeight; // upper bound
+                 
         var xMin = -this.cameraWidth + this.halfSpriteWidth; // left bound
         var xMax = this.cameraWidth - this.halfSpriteWidth; // right bound 
 
@@ -190,14 +162,6 @@ public class PlayerController: MonoBehaviour
             if (this.lives <= 0)
             {
                 this.playerDied(false);
-            }
-        }
-        else if(!this.chainConnector.enabled && this.isDesconnectingTimer <= 0)
-        {
-            ShipController ship = collision.collider.GetComponentInParent<ShipController>();
-            if(ship != null) 
-            {
-                this.setIsConnected(true);
             }
         }
     }
@@ -231,11 +195,12 @@ public class PlayerController: MonoBehaviour
         this.transform.localScale = scale;
     }
 
-    void setIsConnected(bool isConnected)
+    public void setIsConnected(bool isConnected)
     {
+        this.isInSafeArea = isConnected;
+
         if (isConnected)
         {
-            this.ship.lastChainJoint.velocity = (this.ship.lastChainJoint.position - (Vector2)this.chainConnector.transform.position);
             this.mainAudio.clip = this.chainConnectedAudio;
         }
         else
@@ -245,7 +210,6 @@ public class PlayerController: MonoBehaviour
 
         this.mainAudio.Play();
 
-        this.chainConnector.enabled = isConnected;
         this.countdown = isConnected ? -1 : MAX_COUNTDOWN;
         this.worldController.updateCountdown(this.countdown);
     }
@@ -256,13 +220,9 @@ public class PlayerController: MonoBehaviour
         {
             return false;
         }
-        else if (this.chainConnector) 
-        {
-            return this.chainConnector.enabled;
-        }
         else
         {
-            return false;
+            return this.isInSafeArea;
         }
     }
 

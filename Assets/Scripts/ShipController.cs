@@ -3,24 +3,10 @@ using DG.Tweening;
 
 public class ShipController: MonoBehaviour
 {
-    const float JOINT_VELOCITY = 5f;
     public PlayerController player;
     public GameObject talisman;
     public SpriteRenderer lightsSpriteRenderer;
-    public Rigidbody2D lastChainJoint;
     private bool isDestroying = false;
-
-    void Update()
-    {
-        if (this.player && !this.player.isConnected())
-        {
-            this.lastChainJoint.velocity = new Vector2(Random.Range(-1.5f, 1.5f), 1f) * JOINT_VELOCITY;
-        }
-        else
-        {
-            this.lastChainJoint.velocity = Vector2.zero;
-        }
-    }
 
     public void talismanPickedUp()
     {
