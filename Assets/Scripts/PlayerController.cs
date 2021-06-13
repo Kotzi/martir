@@ -37,7 +37,7 @@ public class PlayerController: MonoBehaviour
     private float countdownTimer = 1f;
     private int lives = MAX_LIVES;
     private float isDesconnectingTimer = 2f;
-
+    private bool facingRight = true;
     void Start()
     {
         this.rb = this.GetComponent<Rigidbody2D>();
@@ -99,6 +99,15 @@ public class PlayerController: MonoBehaviour
         if (this.vertical != 0)
         {
             this.speed.y = Mathf.Clamp(this.speed.y + ACCELERATION * Time.deltaTime, -MAX_SPEED, MAX_SPEED);
+        }
+
+        if(this.horizontal > 0 && !this.facingRight) 
+        {
+            this.flip();
+        }
+        else if(this.horizontal < 0 && this.facingRight)
+        {
+            this.flip();
         }
 
         this.rb.velocity = new Vector2(this.horizontal, this.vertical) * this.speed;
@@ -205,16 +214,36 @@ public class PlayerController: MonoBehaviour
 
     }
 
+    void flip()
+    {
+        this.facingRight = !this.facingRight;
+        Vector3 scale = this.transform.localScale;
+        scale.x *= -1;
+        this.transform.localScale = scale;
+    }
+
     void setIsConnected(bool isConnected)
     {
+        if (isConnected)
+        {
+            this.ship.lastChainJoint.velocity = (this.ship.lastChainJoint.position - (Vector2)this.chainConnector.transform.position);
+        }
+
         this.chainConnector.enabled = isConnected;
         this.countdown = isConnected ? -1 : MAX_COUNTDOWN;
         this.worldController.updateCountdown(this.countdown);
     }
     
-    bool isConnected()
+    public bool isConnected()
     {
-        return this.chainConnector.enabled;
+        if (this.chainConnector) 
+        {
+            return this.chainConnector.enabled;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void playerDied(bool runOutOfTime)

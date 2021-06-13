@@ -10,7 +10,7 @@ public class PowerUpController: MonoBehaviour
 
     void Awake()
     {
-        this.lifetime = Random.Range(2f, 4f);
+        this.lifetime = Random.Range(5f, 8f);
         this.transform.localScale *= 0.5f;
     }
 
