@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class PlayerController: MonoBehaviour
@@ -11,6 +12,8 @@ public class PlayerController: MonoBehaviour
     const float MAX_SPEED = 5f;
     const float MIN_SHOOT_COOLDOWN = 0.01f;
     const float ACCELERATION = 7.5f;
+
+    public GameUICanvasController mobileGameUICanvasController;
 
     public WorldController worldController;
     public CannonController cannon;
@@ -63,9 +66,9 @@ public class PlayerController: MonoBehaviour
 
     void Update()
     {
-        this.horizontal = Input.GetAxisRaw("Horizontal");
-        this.vertical = Input.GetAxisRaw("Vertical");
-        this.shoot = Input.GetButton("Shoot");
+        this.horizontal = ( this.mobileGameUICanvasController ? this.mobileGameUICanvasController.joystick.Horizontal : Input.GetAxisRaw("Horizontal"));
+        this.vertical = ( this.mobileGameUICanvasController ? this.mobileGameUICanvasController.joystick.Vertical : Input.GetAxisRaw("Vertical"));
+        this.shoot = ( this.mobileGameUICanvasController ? this.mobileGameUICanvasController.shootButton.isPressed : Input.GetButton("Shoot"));
         this.connect = Input.GetButton("Connect");
     
         if (this.isDesconnectingTimer > 0)

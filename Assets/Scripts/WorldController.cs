@@ -33,6 +33,11 @@ public class WorldController : MonoBehaviour
     {
         this.sceneManager.currentSceneIndex = 1;
         
+        if (Platform.isMobileBrowser())
+        {
+            this.player.mobileGameUICanvasController = this.gameUICanvasController;
+        }
+
         for (int i = 0; i < this.enemySpawnZones.Length; i++)
         {
             this.enemySpawnZones[i].GetComponent<EnemySpawnZoneController>().worldController = this;

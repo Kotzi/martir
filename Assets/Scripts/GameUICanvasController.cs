@@ -8,6 +8,14 @@ public class GameUICanvasController: MonoBehaviour
 {
     public TMP_Text livesText;
     public TMP_Text countdownText;
+    public CanvasRenderer mobileCanvas;
+    public ShootButton shootButton;
+    public Joystick joystick;
+
+    void Awake()
+    {
+        this.mobileCanvas.gameObject.SetActive(Platform.isMobileBrowser());
+    }
 
     public void updateLives(int lives)
     {
