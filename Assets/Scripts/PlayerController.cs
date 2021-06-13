@@ -40,6 +40,7 @@ public class PlayerController: MonoBehaviour
     private int lives = MAX_LIVES;
     private bool facingRight = true;
     private bool isInSafeArea = true;
+    private bool firstConnection = true;
 
     void Start()
     {
@@ -137,7 +138,7 @@ public class PlayerController: MonoBehaviour
 
     void LateUpdate()
     {
-        var yMin = this.mainCamera.transform.position.y - this.cameraHeight + this.halfSpriteHeight; // lower bound
+        var yMin = this.mainCamera.transform.position.y - this.cameraHeight + this.halfSpriteHeight + (this.finalBattle ? 0f : 2f); // lower bound
         var yMax = this.mainCamera.transform.position.y + this.cameraHeight - this.halfSpriteHeight; // upper bound
                  
         var xMin = -this.cameraWidth + this.halfSpriteWidth; // left bound
@@ -152,7 +153,7 @@ public class PlayerController: MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision) 
     {
         EnemyController enemy = collision.collider.GetComponent<EnemyController>();
-        if (enemy)
+        if (enemy && !enemy.isMovingToBoss)
         {
             this.lives = Mathf.Clamp(this.lives - 1, 0, MAX_LIVES);
             this.worldController.updateLives(this.lives);
@@ -198,16 +199,23 @@ public class PlayerController: MonoBehaviour
     {
         this.isInSafeArea = isConnected;
 
-        if (isConnected)
+        if (this.firstConnection)
         {
-            this.mainAudio.clip = this.chainConnectedAudio;
+            this.firstConnection = false;
         }
         else
         {
-            this.mainAudio.clip = this.chainDisconnectedAudio;
-        }
+            if (isConnected)
+            {
+                this.mainAudio.clip = this.chainConnectedAudio;
+            }
+            else
+            {
+                this.mainAudio.clip = this.chainDisconnectedAudio;
+            }
 
-        this.mainAudio.Play();
+            this.mainAudio.Play();
+        }
 
         this.countdown = isConnected ? -1 : MAX_COUNTDOWN;
         this.worldController.updateCountdown(this.countdown);
@@ -228,7 +236,9 @@ public class PlayerController: MonoBehaviour
     public void finalBattleStarted()
     {
         this.finalBattle = true;
-        this.setIsConnected(false);
+        this.isInSafeArea = false;
+        this.countdown = MAX_COUNTDOWN * 2;
+        this.worldController.updateCountdown(this.countdown);
     }
 
     void playerDied(bool runOutOfTime)

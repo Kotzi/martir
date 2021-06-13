@@ -6,7 +6,7 @@ public class WorldController : MonoBehaviour
 {
     const float POWER_UP_MAX_TIME = 5f;
     const float NEEDS_MORE_ENEMIES_TIME = 3f;
-    const int MAX_ATTACHED_ENEMIES = 5;
+    const int MAX_ATTACHED_ENEMIES = 20;
 
     public GameObject shootPowerUpPrefab;
     public GameObject cooldownPowerUpPrefab;
@@ -184,9 +184,8 @@ public class WorldController : MonoBehaviour
                 powerUps[i].destroy(false);
             }
 
-            this.finalBoss.fightStarted();
+            this.finalBoss.fightStarted(this.finalTalisman);
             this.player.finalBattleStarted();
-            this.finalTalisman.isFinalBattle = true;
         }
     }
 }

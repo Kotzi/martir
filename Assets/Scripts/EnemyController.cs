@@ -7,6 +7,7 @@ public class EnemyController: MonoBehaviour, IDamageable
     public float health = 10f;
     public string animationName = "FlyEnemy";
     public bool isActive = true;
+    public bool isMovingToBoss = false;
 
     private ShipController ship;
     private Rigidbody2D rb;
@@ -53,7 +54,7 @@ public class EnemyController: MonoBehaviour, IDamageable
 
     public bool takeDamage(float damageTaken)
     {
-        if (this.isAlive)
+        if (this.isAlive && !this.isMovingToBoss)
         {
             this.mainAudio.Play();
             

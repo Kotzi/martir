@@ -91,5 +91,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 7408060696222898547, guid: cdc255220e5014986be4df47c90d8847, type: 3}
+      propertyPath: m_Mass
+      value: 70
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdc255220e5014986be4df47c90d8847, type: 3}
