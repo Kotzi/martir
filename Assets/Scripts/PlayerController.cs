@@ -141,10 +141,10 @@ public class PlayerController: MonoBehaviour
     void LateUpdate()
     {
         var yMin = this.mainCamera.transform.position.y - this.cameraHeight + this.halfSpriteHeight + (this.finalBattle ? 0f : 2f); // lower bound
-        var yMax = this.mainCamera.transform.position.y + this.cameraHeight - this.halfSpriteHeight; // upper bound
+        var yMax = this.mainCamera.transform.position.y + this.cameraHeight - this.halfSpriteHeight - 1f; // upper bound
                  
-        var xMin = -this.cameraWidth + this.halfSpriteWidth; // left bound
-        var xMax = this.cameraWidth - this.halfSpriteWidth; // right bound 
+        var xMin = -(this.cameraWidth * this.mainCamera.rect.width) + this.halfSpriteWidth; // left bound
+        var xMax = (this.cameraWidth * this.mainCamera.rect.width) - this.halfSpriteWidth; // right bound 
 
         var xValidPosition = Mathf.Clamp(transform.position.x, xMin, xMax);
         var yValidPosition = Mathf.Clamp(transform.position.y, yMin, yMax);

@@ -20,7 +20,6 @@
         // obtain camera component so we can modify its viewport
         Camera camera = GetComponent<Camera>();
     
-        print(scaleHeight);
         // if scaled height is less than current height, add letterbox
         if (scaleHeight < 1.0f)
         {
