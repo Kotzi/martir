@@ -39,7 +39,7 @@ public class WorldController : MonoBehaviour
 
     void Start()
     {
-        this.sceneManager.currentSceneIndex = 1;
+        this.sceneManager.currentSceneIndex = 2;
         
         if (Platform.isMobileBrowser())
         {
