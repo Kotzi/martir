@@ -17,6 +17,7 @@ public class GameUICanvasController: MonoBehaviour
     void Awake()
     {
         this.mobileCanvas.gameObject.SetActive(Platform.isMobileBrowser());
+        this.updateCountdown(-1);
     }
 
     public void updateLives(int lives)
@@ -28,14 +29,22 @@ public class GameUICanvasController: MonoBehaviour
     {
         if (countdown != -1)
         {
-            this.countdownImage.enabled = true;
-            this.countdownText.enabled = true;
-            this.countdownText.transform.localScale = Vector3.one;
-            this.countdownText.text = countdown.ToString();
-            this.countdownText.transform.DOPunchScale(Vector3.one * 1.15f, 0.1f);
+            var currentNumber = int.Parse(this.countdownText.text);
+            if (currentNumber != countdown) 
+            {
+                this.countdownImage.enabled = true;
+                this.countdownText.enabled = true;
+                this.countdownText.transform.localScale = Vector3.one;
+                this.countdownText.text = countdown.ToString();
+                if (currentNumber != -1)
+                {
+                    this.countdownText.transform.DOPunchScale(Vector3.one * 1.15f, 0.1f);
+                }
+            }
         }
         else 
         {
+            this.countdownText.text = "-1";
             this.countdownText.transform.localScale = Vector3.one;
             this.countdownImage.enabled = false;
             this.countdownText.enabled = false;

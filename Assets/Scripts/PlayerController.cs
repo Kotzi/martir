@@ -19,6 +19,7 @@ public class PlayerController: MonoBehaviour
     public AudioClip chainDisconnectedAudio;
     public float shotCooldownTime = 0.05f;
     public bool finalBattle = false;
+    public bool isActive = true;
 
     private Rigidbody2D rb;
     private SpriteRenderer sr;
@@ -42,6 +43,7 @@ public class PlayerController: MonoBehaviour
     private bool facingRight = true;
     private bool isInSafeArea = true;
     private bool firstConnection = true;
+    private bool isInvincible = false;
 
     void Start()
     {
@@ -75,7 +77,7 @@ public class PlayerController: MonoBehaviour
 
         }
     
-        if (!this.isConnected())
+        if (!this.isConnected() && this.isActive)
         {
             this.countdownTimer -= Time.deltaTime;
             if (this.countdownTimer <= 0)
@@ -155,13 +157,18 @@ public class PlayerController: MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision) 
     {
         EnemyController enemy = collision.collider.GetComponent<EnemyController>();
-        if (enemy && !enemy.isMovingToBoss)
+        if (enemy && !enemy.isMovingToBoss && !this.isInvincible)
         {
             this.lives = Mathf.Clamp(this.lives - 1, 0, MAX_LIVES);
 
+            this.isInvincible = true;
             DOTween.Sequence()
                     .Append(this.sr.DOFade(0.65f, 0.15f))
-                    .Append(this.sr.DOFade(1f, 0.05f));
+                    .Append(this.sr.DOFade(1f, 0.05f))
+                    .SetLoops(10)
+                    .OnComplete(() => {
+                        this.isInvincible = false;
+                    });
 
             this.worldController.updateLives(this.lives);
             enemy.destroyByPlayerImpact();
@@ -225,6 +232,7 @@ public class PlayerController: MonoBehaviour
         }
 
         this.countdown = isConnected ? -1 : MAX_COUNTDOWN;
+        this.countdownTimer = 1f;
         this.worldController.updateCountdown(this.countdown);
     }
     
@@ -242,9 +250,10 @@ public class PlayerController: MonoBehaviour
 
     public void finalBattleStarted()
     {
+        this.countdown = MAX_COUNTDOWN * 2;
+        this.countdownTimer = 1f;
         this.finalBattle = true;
         this.isInSafeArea = false;
-        this.countdown = MAX_COUNTDOWN * 2;
         this.worldController.updateCountdown(this.countdown);
     }
 

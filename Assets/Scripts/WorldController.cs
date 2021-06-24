@@ -56,7 +56,7 @@ public class WorldController : MonoBehaviour
 
     void Update()
     {
-        if (gameActive)
+        if (this.gameActive)
         {
             this.powerUpTime -= Time.deltaTime;
 
@@ -95,6 +95,15 @@ public class WorldController : MonoBehaviour
     {
         this.gameActive = active;
         this.resetSpawnZonesActivate(active, countForSpawnZonesActivation);
+    }
+
+    void deactivateAllEnemies()
+    {
+        var enemies = Object.FindObjectsOfType<EnemyController>();
+        foreach (var enemy in enemies)
+        {
+            enemy.isActive = false;
+        }
     }
 
     void resetSpawnZonesActivate(bool active, int countForActive)
@@ -157,6 +166,7 @@ public class WorldController : MonoBehaviour
             this.gameFinished = true;
 
             this.resetActive(false, 5);
+            this.deactivateAllEnemies();
 
             this.mainAudio.Stop();
             this.oneShotAudio.clip = this.youLostClip;
@@ -172,6 +182,7 @@ public class WorldController : MonoBehaviour
             this.gameFinished = true;
 
             this.resetActive(false, 5);
+            this.deactivateAllEnemies();
             
             this.mainAudio.Stop();
             this.oneShotAudio.clip = this.youWonClip;
